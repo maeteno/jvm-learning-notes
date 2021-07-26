@@ -1,19 +1,15 @@
 plugins {
     java
-    kotlin("jvm") version "1.5.21"
 }
 
-group = "com.maeteno.study.bio"
-version = "1.0-SNAPSHOT"
+group = "com.maeteno.study.java.io"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    // kotlin 支持
-    implementation(kotlin("stdlib"))
-
     // log
     implementation("org.slf4j:slf4j-log4j12:1.7.32")
 

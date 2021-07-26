@@ -1,3 +1,8 @@
 rootProject.name = "jvm-learning-notes"
-include("study-bio")
-include("study-date")
+
+include("java-collections")
+include("java-io")
+include("groovy-base")
+include("kotlin-base")
+include("kotlin-coroutines")
+include("java-concurrent")
