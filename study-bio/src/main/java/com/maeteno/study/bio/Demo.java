@@ -1,4 +1,4 @@
-package com.maeteno.study.io;
+package com.maeteno.study.bio;
 
 import lombok.extern.slf4j.Slf4j;
 

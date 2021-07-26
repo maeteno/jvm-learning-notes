@@ -3,7 +3,7 @@ plugins {
     kotlin("jvm") version "1.5.21"
 }
 
-group = "com.maeteno.study"
+group = "com.maeteno.study.bio"
 version = "1.0-SNAPSHOT"
 
 repositories {
