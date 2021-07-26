@@ -1,4 +1,4 @@
-package com.maeteno.study.io
+package com.maeteno.study.bio
 
 
 fun main() {
