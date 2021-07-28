@@ -12,3 +12,12 @@ allprojects {
 subprojects {
 
 }
+
+tasks.create("githubdoc") {
+    group = "documentation"
+    description = "github pages task"
+    println("[phase:configuration] compile")
+    doFirst {
+        println("[phase:execution] compile :doFirst()")
+    }
+}
