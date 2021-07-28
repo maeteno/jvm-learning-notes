@@ -9,3 +9,5 @@ Root project 'jvm-learning-notes'
 +--- Project ':kotlin-base'         # kotlin 基础语法
 \--- Project ':kotlin-coroutines'   # kotlin 协程
 ```
+---
+- Gradle多模块项目:  <https://www.jianshu.com/p/fabfb23274e6>

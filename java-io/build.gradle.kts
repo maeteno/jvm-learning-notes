@@ -13,6 +13,9 @@ dependencies {
     // log
     implementation("org.slf4j:slf4j-log4j12:1.7.32")
 
+    // hutool
+    implementation("cn.hutool:hutool-all:5.7.5")
+
     // lombok
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
