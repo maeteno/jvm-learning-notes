@@ -3,7 +3,7 @@ package com.maeteno.study.java.concurrent.thread;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ThreadCreateExample {
+public class RunnableThreadExample {
     public void createByThread() {
         Thread thread = new Thread() {
             @Override

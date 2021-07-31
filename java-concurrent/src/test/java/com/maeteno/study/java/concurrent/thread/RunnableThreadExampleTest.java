@@ -3,8 +3,8 @@ package com.maeteno.study.java.concurrent.thread;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class ThreadCreateExampleTest {
-    private final ThreadCreateExample threadCreateExample = new ThreadCreateExample();
+class RunnableThreadExampleTest {
+    private final RunnableThreadExample threadCreateExample = new RunnableThreadExample();
 
     @Test
     void createByThread() {
