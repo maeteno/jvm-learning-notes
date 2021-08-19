@@ -10,6 +10,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * @author Alan.Fu
+ */
 @Slf4j
 public class ByteBufferExample {
     private final File file;

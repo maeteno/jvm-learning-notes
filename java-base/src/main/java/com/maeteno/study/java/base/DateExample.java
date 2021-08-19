@@ -9,7 +9,9 @@ import java.util.Date;
 // https://www.notion.so/maeteno/Java-d09750e5c92546169a2286ff8d080465
 
 /**
- *  时间的转换需要使用 SimpleDateFormat 进行格式化输出
+ * 时间的转换需要使用 SimpleDateFormat 进行格式化输出
+ *
+ * @author Alan.Fu
  */
 @Slf4j
 public class DateExample {
@@ -23,7 +25,7 @@ public class DateExample {
         log.info("{}", date);
     }
 
-    public void dateToStr(){
+    public void dateToStr() {
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateStr = format.format(date);

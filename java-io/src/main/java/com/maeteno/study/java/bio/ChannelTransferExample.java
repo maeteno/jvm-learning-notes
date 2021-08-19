@@ -11,6 +11,11 @@ import java.io.FileOutputStream;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 
+/**
+ * FileChannel Demo
+ *
+ * @author Alan.Fu
+ */
 @Slf4j
 public class ChannelTransferExample {
 
