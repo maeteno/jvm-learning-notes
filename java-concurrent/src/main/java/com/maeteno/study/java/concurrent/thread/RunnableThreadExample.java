@@ -2,6 +2,9 @@ package com.maeteno.study.java.concurrent.thread;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 创建线程
+ */
 @Slf4j
 public class RunnableThreadExample {
     public void createByThread() {
