@@ -12,42 +12,46 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class CountDownLatchExample {
-    private static final ThreadPoolExecutor POOL_EXECUTOR = new ThreadPoolExecutor(
-            0,
-            Integer.MAX_VALUE,
-            60L,
-            TimeUnit.SECONDS,
-            new SynchronousQueue<Runnable>()
-    );
+
 
     public static void main(String[] args) {
+        final ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(
+                0,
+                Integer.MAX_VALUE,
+                60L,
+                TimeUnit.SECONDS,
+                new SynchronousQueue<Runnable>()
+        );
+
         CountDownLatch latch = new CountDownLatch(4);
 
-        POOL_EXECUTOR.execute(() -> {
+        Runnable runnable = () -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                log.info("InterruptedException", e);
+                Thread.currentThread().interrupt();
+            }
             log.info("Running 1 {}", Thread.currentThread().getName());
             latch.countDown();
-        });
+        };
 
-        POOL_EXECUTOR.execute(() -> {
-            log.info("Running 2 {}", Thread.currentThread().getName());
-            latch.countDown();
-        });
-
-        POOL_EXECUTOR.execute(() -> {
-            log.info("Running 3 {}", Thread.currentThread().getName());
-            latch.countDown();
-        });
+        poolExecutor.execute(runnable);
+        poolExecutor.execute(runnable);
+        poolExecutor.execute(runnable);
 
         try {
-            if (!latch.await(5, TimeUnit.SECONDS)) {
-                log.info("等等超时");
+            if (latch.await(3, TimeUnit.SECONDS)) {
+                log.info("任务完成");
+            }else{
+                log.info("任务超时");
             }
-
             log.info("End...");
         } catch (InterruptedException e) {
             log.info("InterruptedException", e);
+            Thread.currentThread().interrupt();
+        } finally {
+            poolExecutor.shutdown();
         }
-
-        POOL_EXECUTOR.shutdown();
     }
 }
