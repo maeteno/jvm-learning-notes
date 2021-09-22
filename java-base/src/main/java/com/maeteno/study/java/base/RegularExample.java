@@ -7,22 +7,18 @@ import java.util.regex.Pattern;
 
 /**
  * 正则示例
- * Java 的正则功能由 java.util.regex.* 包提供。主要有两个类提供服务
- * - Pattern 通过正则规则字符串创建一个匹配的模板
- * - Matcher 匹配查找器
+ * Java 的正则功能由 java.util.regex.* 包提供。主要有两个类提供服务<br/>
+ * - Pattern 通过正则规则字符串创建一个匹配的模板<br/>
+ * - Matcher 匹配查找器<br/>
  *
  * @author Alan.Fu
  */
 @Slf4j
 public class RegularExample {
-
-    public static void main(String[] args) {
-        baseDemo();
-        groupDemo();
-        strDemo();
-    }
-
-    public static void baseDemo() {
+    /**
+     * 基础使用
+     */
+    public void baseDemo() {
         // 按指定模式在字符串查找
         String line = "This order was placed for QT3000! OK?";
         // 匹配表达式
@@ -43,7 +39,7 @@ public class RegularExample {
         }
     }
 
-    public static void groupDemo() {
+    public void groupDemo() {
         // 按指定模式在字符串查找
         String line = "18666667879";
 
@@ -72,7 +68,7 @@ public class RegularExample {
     /**
      * 字符串匹配
      */
-    public static void strDemo() {
+    public void strDemo() {
         // 按指定模式在字符串查找
         String line = "18666667879";
         // 匹配表达式
