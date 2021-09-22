@@ -34,10 +34,10 @@ public class RegularExample {
         // 通过 Pattern::matcher 返回一个Matcher 匹配查找器
         Matcher m = r.matcher(line);
         if (m.find()) {
-            log.info("Found value: " + m.group(0));
-            log.info("Found value: " + m.group(1));
-            log.info("Found value: " + m.group(2));
-            log.info("Found value: " + m.group(3));
+            log.info("Group 0: " + m.group(0));
+            log.info("Group 1: " + m.group(1));
+            log.info("Group 2: " + m.group(2));
+            log.info("Group 3: " + m.group(3));
         } else {
             log.info("NO MATCH");
         }
@@ -56,11 +56,11 @@ public class RegularExample {
         // 通过 Pattern::matcher 返回一个Matcher 匹配查找器
         Matcher m = r.matcher(line);
         if (m.find()) {
-            log.info("Found value: " + m.group(0));
-            log.info("Found value: " + m.group(1));
-            log.info("Found value: " + m.group("name1"));
-            log.info("Found value: " + m.group(2));
-            log.info("Found value: " + m.group(3));
+            log.info("Group 0: " + m.group(0));
+            log.info("Group 1: " + m.group(1));
+            log.info("Group name1: " + m.group("name1"));
+            log.info("Group 2: " + m.group(2));
+            log.info("Group 3: " + m.group(3));
         } else {
             log.info("NO MATCH");
         }
@@ -79,6 +79,7 @@ public class RegularExample {
         String regex = "^(?<h>\\d{3})(\\d{5})(\\d{3})$";
 
         String replace = line.replaceAll(regex, "${h}*****$3");
+
         String replace2 = Pattern.compile(regex).matcher(line).replaceAll("${h}*****$3");
 
         log.info("String rep:{}", replace);
