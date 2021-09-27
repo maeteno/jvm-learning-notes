@@ -60,7 +60,7 @@ public class FileChannelExample {
     public void fileChannelByRandomAccessFile() {
         log.info("RandomAccessFile");
         try (FileChannel channel = new RandomAccessFile(url.getFile(), "rw").getChannel()) {
-            ByteBuffer buffer = ByteBuffer.allocate(20);
+            ByteBuffer buffer = ByteBuffer.allocateDirect(20);
             channel.read(buffer);
 
             channel.write(StandardCharsets.UTF_8.encode("\n"));
