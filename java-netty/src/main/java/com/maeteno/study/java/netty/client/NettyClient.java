@@ -1,6 +1,7 @@
 package com.maeteno.study.java.netty.client;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -23,12 +24,11 @@ public class NettyClient {
                         ch.pipeline().addLast(new StringEncoder());
                     }
                 })
-                .connect(new InetSocketAddress(8081))
-                .sync()
-                .channel()
-                .writeAndFlush("1234");
+                .connect(new InetSocketAddress(8081));
 
-        channelFuture.channel().close();
-
+        channelFuture.sync(); // 阻塞线程，同步等待连接建立
+        Channel channel = channelFuture.channel();
+        channel.writeAndFlush("1234");
+        channel.close();
     }
 }
