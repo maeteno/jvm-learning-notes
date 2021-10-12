@@ -12,6 +12,7 @@ import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 /**
@@ -19,7 +20,7 @@ import java.util.stream.IntStream;
  */
 @Slf4j
 public class NettyClient2 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         NioEventLoopGroup loopGroup = new NioEventLoopGroup(10);
 
         Bootstrap bootstrap = new Bootstrap()
@@ -42,10 +43,14 @@ public class NettyClient2 {
                     ChannelFuture closeFuture = future.channel().closeFuture();
                     closeFuture.addListener((ChannelFutureListener) future1 -> {
                         // 因为 eventLoop 本身是一个执行器，所以不关闭该线程池程序不会退出。
-                        log.debug("close");
+                        log.debug("close: {}", future1.getNow());
                     });
                 }));
 
-        // loopGroup.shutdownGracefully();
+        if (!loopGroup.awaitTermination(1000L, TimeUnit.MILLISECONDS)) {
+            loopGroup.shutdownGracefully();
+        }
+
+        // loopGroup.shutdownGracefully(1000L,100L,TimeUnit.MILLISECONDS);
     }
 }
