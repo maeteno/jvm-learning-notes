@@ -23,9 +23,8 @@ public class PromiseDemo {
         });
 
         // 4. 阻塞获取结果
-        // log.info("Promise: {}", promise.get());
-
-        // 异步获取结果
+        // <code>log.info("Promise: {}", promise.get());</code>
+        // 5. 异步获取结果
         promise.addListener(p -> {
             log.info("ex");
             log.info("Promise: {}", promise.getNow());

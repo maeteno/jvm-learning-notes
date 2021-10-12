@@ -31,6 +31,7 @@ public class NettyServer {
                             @Override
                             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
                                 log.info("{}", msg.toString());
+                                ch.writeAndFlush(ctx.alloc().buffer().writeBytes("server...".getBytes()));
                                 super.channelRead(ctx, msg);
                             }
                         });
