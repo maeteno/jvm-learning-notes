@@ -3,6 +3,7 @@ package com.maeteno.study.java.nio;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -18,30 +19,40 @@ import java.util.Set;
  */
 @Slf4j
 public class ServerSocketChannelExample {
+    private final Selector boss;
+    private final Selector work;
 
-    public static void main(String[] args) {
-        try {
-            server();
-        } catch (Exception e) {
-            log.error("Server Exception", e);
-        }
+    private ServerSocketChannelExample() throws IOException {
+        boss = Selector.open();
+        work = Selector.open();
+    }
+
+    public static ServerSocketChannelExample open() throws IOException {
+        return new ServerSocketChannelExample();
     }
 
     @SneakyThrows
-    public static void server() {
-        Selector selector = Selector.open();
-
+    public void run() {
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         serverSocketChannel.configureBlocking(false);
-
         serverSocketChannel.socket().bind(new InetSocketAddress(6379));
-        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+        serverSocketChannel.register(boss, SelectionKey.OP_ACCEPT);
 
-        while (selector.select() > 0) {
-            Set<SelectionKey> selectionKeys = selector.selectedKeys();
+        Thread bossThread = new Thread(this::runBoss);
+        bossThread.start();
+
+        Thread workThread = new Thread(this::runWork);
+        workThread.setDaemon(true);
+        workThread.start();
+    }
+
+    @SneakyThrows
+    private void runBoss() {
+        log.info("Boss 线程启动...");
+        while (boss.select() > 0) {
+            log.info("Boss 获得监听...");
+            Set<SelectionKey> selectionKeys = boss.selectedKeys();
             Iterator<SelectionKey> keyIterator = selectionKeys.iterator();
-
-            ByteBuffer buffer = ByteBuffer.allocate(10);
 
             while (keyIterator.hasNext()) {
                 SelectionKey key = keyIterator.next();
@@ -52,10 +63,29 @@ public class ServerSocketChannelExample {
                     SocketChannel socketChannel = channel.accept();
                     // 设置为非阻塞
                     socketChannel.configureBlocking(false);
-                    // 注册这个
-                    socketChannel.register(selector, SelectionKey.OP_READ);
+                    // 注册这个, work 已经在其他线程监听，该注册无法生效
+                    socketChannel.register(work, SelectionKey.OP_READ);
                     log.info("Server Acceptable");
                 }
+
+                keyIterator.remove();
+            }
+
+        }
+    }
+
+    @SneakyThrows
+    private void runWork() {
+        log.info("Work 线程启动...");
+        while (work.select() > 0) {
+            log.info("Work 获得监听...");
+            Set<SelectionKey> selectionKeys = work.selectedKeys();
+            Iterator<SelectionKey> keyIterator = selectionKeys.iterator();
+
+            ByteBuffer buffer = ByteBuffer.allocate(100);
+
+            while (keyIterator.hasNext()) {
+                SelectionKey key = keyIterator.next();
 
                 if (key.isReadable()) {
                     log.info("Server Readable");
@@ -73,12 +103,12 @@ public class ServerSocketChannelExample {
                         log.error("Exception ", e);
                     }
 
-                    // channel.close();
+                    channel.close();
                 }
 
                 keyIterator.remove();
             }
-
         }
+        log.info("Work 监听结束...");
     }
 }
