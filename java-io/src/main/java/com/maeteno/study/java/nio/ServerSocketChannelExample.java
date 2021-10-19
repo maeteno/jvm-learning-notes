@@ -70,45 +70,48 @@ public class ServerSocketChannelExample {
 
                 keyIterator.remove();
             }
-
         }
     }
 
     @SneakyThrows
     private void runWork() {
-        log.info("Work 线程启动...");
-        while (work.select() > 0) {
-            log.info("Work 获得监听...");
-            Set<SelectionKey> selectionKeys = work.selectedKeys();
-            Iterator<SelectionKey> keyIterator = selectionKeys.iterator();
+        if (work.keys().isEmpty()) {
+            log.info("无监听...");
+            Thread.sleep(1000L);
+        } else {
+            while (work.select(1000L) > 0) {
+                Set<SelectionKey> selectionKeys = work.selectedKeys();
+                Iterator<SelectionKey> keyIterator = selectionKeys.iterator();
 
-            ByteBuffer buffer = ByteBuffer.allocate(100);
+                ByteBuffer buffer = ByteBuffer.allocate(100);
 
-            while (keyIterator.hasNext()) {
-                SelectionKey key = keyIterator.next();
+                while (keyIterator.hasNext()) {
+                    SelectionKey key = keyIterator.next();
 
-                if (key.isReadable()) {
-                    log.info("Server Readable");
-                    SocketChannel channel = (SocketChannel) key.channel();
+                    if (key.isReadable()) {
+                        log.info("Server Readable");
+                        SocketChannel channel = (SocketChannel) key.channel();
 
-                    while (channel.read(buffer) > 0) {
-                        buffer.flip();
-                        log.info("{}", buffer.array());
-                        buffer.clear();
+                        while (channel.read(buffer) > 0) {
+                            buffer.flip();
+                            log.info("{}", buffer.array());
+                            buffer.clear();
+                        }
+
+                        try {
+                            channel.write(ByteBuffer.wrap("End...".getBytes(StandardCharsets.UTF_8)));
+                        } catch (Exception e) {
+                            log.error("Exception ", e);
+                        }
+
+                        // channel.close();
                     }
 
-                    try {
-                        channel.write(ByteBuffer.wrap("End...".getBytes(StandardCharsets.UTF_8)));
-                    } catch (Exception e) {
-                        log.error("Exception ", e);
-                    }
-
-                    channel.close();
+                    keyIterator.remove();
                 }
-
-                keyIterator.remove();
             }
         }
-        log.info("Work 监听结束...");
+
+        runWork();
     }
 }

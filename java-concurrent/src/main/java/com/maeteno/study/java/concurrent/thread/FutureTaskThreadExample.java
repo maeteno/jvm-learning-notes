@@ -5,20 +5,21 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.RunnableFuture;
 
 @Slf4j
 public class FutureTaskThreadExample {
 
+    public static void main(String[] args) {
+        FutureTaskThreadExample example = new FutureTaskThreadExample();
+        example.callableDemo();
+    }
+
     @SneakyThrows
     public void callableDemo() {
-        Callable<Integer> callable = new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return 100;
-            }
-        };
+        Callable<Integer> callable = () -> 100;
+        RunnableFuture<Integer> task = new FutureTask<>(callable);
 
-        FutureTask<Integer> task = new FutureTask<>(callable);
         Thread thread = new Thread(task, "future-task");
 
         thread.start();
@@ -27,5 +28,4 @@ public class FutureTaskThreadExample {
 
         log.info("r:{}", r);
     }
-
 }

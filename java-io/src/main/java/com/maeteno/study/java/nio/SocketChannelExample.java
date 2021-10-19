@@ -3,7 +3,6 @@ package com.maeteno.study.java.nio;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
@@ -66,11 +65,13 @@ public class SocketChannelExample {
                             buffer.clear();
                         }
 
-                        try {
-                            channel.close();
-                        } catch (IOException e) {
-                            log.error("IOException", e);
-                        }
+//                        try {
+//                            channel.close();
+//                        } catch (IOException e) {
+//                            log.error("IOException", e);
+//                        }
+
+                        channel.finishConnect();
                     }
 
                     keyIterator.remove();
