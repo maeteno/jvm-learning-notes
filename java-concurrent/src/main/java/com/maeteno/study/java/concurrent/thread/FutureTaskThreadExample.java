@@ -7,6 +7,9 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
 
+/**
+ * @author Alan.Fu
+ */
 @Slf4j
 public class FutureTaskThreadExample {
 
@@ -25,7 +28,6 @@ public class FutureTaskThreadExample {
         thread.start();
 
         Integer r = task.get();
-
         log.info("r:{}", r);
     }
 }
