@@ -2,7 +2,8 @@ package com.maeteno.study.java.concurrent.pool;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Queue;
+import java.util.concurrent.Executor;
+
 
 /**
  * @author Alan.Fu
@@ -10,6 +11,11 @@ import java.util.Queue;
 @Slf4j
 public class ThreadPoolExecutorExample {
     public static void main(String[] args) {
-        log.info("----");
+        Executor executor = new MyThreadPoolExecutor(5);
+
+        for (int i = 0; i < 1000; i++) {
+            final int finalI = i;
+            executor.execute(() -> log.info("Thread Name: {} => {}", Thread.currentThread().getName(), finalI));
+        }
     }
 }
