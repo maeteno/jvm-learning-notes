@@ -17,45 +17,61 @@ public class MyLock implements Lock {
 
     @Override
     public void lock() {
-
+        sync.acquire(1);
     }
 
     @Override
     public void lockInterruptibly() throws InterruptedException {
-
+        sync.acquireInterruptibly(1);
     }
 
     @Override
     public boolean tryLock() {
-        return false;
+        return sync.tryAcquire(1);
     }
 
     @Override
     public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
-        return false;
+        return sync.tryAcquireNanos(1, unit.toNanos(time));
     }
 
     @Override
     public void unlock() {
-
+        sync.release(1);
     }
 
     @Override
     public Condition newCondition() {
-        return null;
+        return sync.newCondition();
     }
-    
+
     public static class MySync extends AbstractQueuedSynchronizer {
         @Override
         protected boolean tryAcquire(int arg) {
-            compareAndSetState(0, 1);
-            setExclusiveOwnerThread(Thread.currentThread());
-            return super.tryAcquire(arg);
+            if (compareAndSetState(0, 1)) {
+                // 获得锁成功
+                setExclusiveOwnerThread(Thread.currentThread());
+                return true;
+            }
+
+            return false;
         }
 
         @Override
         protected boolean tryRelease(int arg) {
-            return super.tryRelease(arg);
+            setExclusiveOwnerThread(null);
+            setState(0);
+
+            return true;
+        }
+
+        @Override
+        protected boolean isHeldExclusively() {
+            return getState() == 1;
+        }
+
+        private Condition newCondition() {
+            return new ConditionObject();
         }
     }
 }
