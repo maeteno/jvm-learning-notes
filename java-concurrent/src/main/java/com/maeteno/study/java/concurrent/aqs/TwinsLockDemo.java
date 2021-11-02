@@ -2,13 +2,15 @@ package com.maeteno.study.java.concurrent.aqs;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.locks.Lock;
+
 /**
  * @author Alan.Fu
  */
 @Slf4j
-public class MyLockDemo {
+public class TwinsLockDemo {
     public static void main(String[] args) {
-        MyLock lock = new MyLock();
+        Lock lock = new TwinsLock();
 
         for (int i = 0; i < 100; i++) {
             final int finalI = i;

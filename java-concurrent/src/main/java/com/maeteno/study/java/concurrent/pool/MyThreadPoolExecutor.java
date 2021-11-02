@@ -20,6 +20,7 @@ public class MyThreadPoolExecutor implements Executor {
             new Thread(() -> {
                 while (true) {
                     try {
+                        // 阻塞获取队列的任务执行
                         Runnable runnable = workQueue.take();
                         runnable.run();
                     } catch (InterruptedException e) {
@@ -30,21 +31,12 @@ public class MyThreadPoolExecutor implements Executor {
         }
     }
 
-    /**
-     * Executes the given command at some time in the future.  The command
-     * may execute in a new thread, in a pooled thread, or in the calling
-     * thread, at the discretion of the {@code Executor} implementation.
-     *
-     * @param command the runnable task
-     * @throws RejectedExecutionException if this task cannot be
-     *                                    accepted for execution
-     * @throws NullPointerException       if command is null
-     */
     @Override
     public void execute(Runnable command) {
         Objects.requireNonNull(command);
 
         try {
+            // 提交任务到队列
             workQueue.put(command);
         } catch (InterruptedException e) {
             log.error("InterruptedException", e);

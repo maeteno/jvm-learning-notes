@@ -15,7 +15,13 @@ public class ThreadPoolExecutorExample {
 
         for (int i = 0; i < 1000; i++) {
             final int finalI = i;
-            executor.execute(() -> log.info("Thread Name: {} => {}", Thread.currentThread().getName(), finalI));
+            executor.execute(() -> {
+                try {
+                    Thread.sleep(100L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                log.info("Thread Name: {} => {}", Thread.currentThread().getName(), finalI);});
         }
     }
 }
