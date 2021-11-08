@@ -2,6 +2,12 @@ package com.maeteno.study.java.concurrent;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
@@ -15,6 +21,16 @@ public class ReentrantReadWriteLockExample {
 
     public static void main(String[] args) {
         ReentrantReadWriteLockExample example = new ReentrantReadWriteLockExample();
+
+        ConcurrentHashMap map = new ConcurrentHashMap();
+
+        ConcurrentLinkedQueue queue = new ConcurrentLinkedQueue();
+
+        List<String> list = Collections.synchronizedList(new ArrayList<String>());
+
+        Hashtable<String, String> hashtable = new Hashtable<>();
+
+        hashtable.put("123", "456");
 
         for (int i = 0; i < 10; i++) {
             int finalI = i;
