@@ -21,7 +21,8 @@ public class ThreadPoolExecutorExample {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                log.info("Thread Name: {} => {}", Thread.currentThread().getName(), finalI);});
+                log.info("Thread Name: {} => {}", Thread.currentThread().getName(), finalI);
+            });
         }
     }
 }
