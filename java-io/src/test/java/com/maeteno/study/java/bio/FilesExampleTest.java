@@ -9,14 +9,18 @@ class FilesExampleTest {
     @Test
     void walkFileTree() {
         filesExample.walkFileTree();
-
         Assertions.assertTrue(true);
     }
 
     @Test
     void lines() {
         filesExample.lines();
+        Assertions.assertTrue(true);
+    }
 
+    @Test
+    void streamClose() {
+        filesExample.streamClose();
         Assertions.assertTrue(true);
     }
 }
