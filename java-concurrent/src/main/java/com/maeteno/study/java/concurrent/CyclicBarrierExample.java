@@ -31,7 +31,7 @@ public class CyclicBarrierExample {
                 cyclicBarrier.await();
                 log.info("End 1");
             } catch (InterruptedException | BrokenBarrierException e) {
-                e.printStackTrace();
+                log.error("Exception: ", e);
             }
         });
 

@@ -16,6 +16,12 @@ dependencies {
     // hutool
     implementation("cn.hutool:hutool-all:5.7.5")
 
+    // https://mvnrepository.com/artifact/org.redisson/redisson
+    implementation("org.redisson:redisson:3.17.0")
+
+    // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava
+    implementation("io.reactivex.rxjava3:rxjava:3.1.4")
+
     // lombok
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
