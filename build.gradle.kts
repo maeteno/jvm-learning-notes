@@ -5,6 +5,12 @@ plugins {
     idea
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
+
 allprojects {
 
 }

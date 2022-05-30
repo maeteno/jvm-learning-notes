@@ -13,7 +13,6 @@ import static com.maeteno.study.java.concurrent.rx.WorkStart.REDIS_CONFIG;
  */
 @Slf4j
 public class WorkNode1 {
-
     public static void main(String[] args) {
         var nodeConfig = new RedissonNodeConfig(REDIS_CONFIG);
         nodeConfig.setExecutorServiceWorkers(Collections.singletonMap("executor-service-3", 10));

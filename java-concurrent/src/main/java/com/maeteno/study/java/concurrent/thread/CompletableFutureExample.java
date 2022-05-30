@@ -15,8 +15,6 @@ public class CompletableFutureExample {
     public static void main(String[] args) {
         CompletableFuture<Integer> completableFuture = CompletableFuture.supplyAsync(() -> 100);
         completableFuture.thenAccept(r -> System.out.println("Result: " + r));
-
-
         Thread.sleep(1000L);
     }
 }
