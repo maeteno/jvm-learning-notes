@@ -31,7 +31,6 @@ public class StreamDemo01 {
     }
 
     static class MyIterable implements Iterable<Integer> {
-
         /**
          * Returns an iterator over elements of type {@code T}.
          *
