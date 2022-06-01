@@ -12,7 +12,9 @@ java {
 }
 
 allprojects {
-
+    tasks.withType(JavaCompile::class.java) {
+        options.encoding = "UTF-8"
+    }
 }
 
 subprojects {
