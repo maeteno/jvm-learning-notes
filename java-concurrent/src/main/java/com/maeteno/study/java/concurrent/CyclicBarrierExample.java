@@ -17,7 +17,7 @@ public class CyclicBarrierExample {
     public static void main(String[] args) {
         final ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(
                 2,
-                2,
+                3,
                 60L,
                 TimeUnit.SECONDS,
                 new SynchronousQueue<>()
@@ -26,26 +26,29 @@ public class CyclicBarrierExample {
         CyclicBarrier cyclicBarrier = new CyclicBarrier(2, () -> log.info("ALL END"));
 
         poolExecutor.execute(() -> {
-            try {
-                log.info("Start 1");
-                cyclicBarrier.await();
-                log.info("End 1");
-            } catch (InterruptedException | BrokenBarrierException e) {
-                log.error("Exception: ", e);
+            for (int i = 0; i < 5; i++) {
+                try {
+                    log.info("Start: {}",i);
+                    cyclicBarrier.await();
+                    log.info("Start: {}",i);
+                } catch (InterruptedException | BrokenBarrierException e) {
+                    log.error("Exception: ", e);
+                }
             }
         });
 
         poolExecutor.execute(() -> {
-            try {
-                log.info("Start 2");
-                Thread.sleep(2000L);
-                cyclicBarrier.await();
-                log.info("End 2");
-            } catch (InterruptedException | BrokenBarrierException e) {
-                e.printStackTrace();
+            for (int i = 0; i < 5; i++) {
+                try {
+                    log.info("2->Start: {}",i);
+                    Thread.sleep(2000L);
+                    cyclicBarrier.await();
+                    log.info("2->End: {}",i);
+                } catch (InterruptedException | BrokenBarrierException e) {
+                    e.printStackTrace();
+                }
             }
         });
-
 
         poolExecutor.shutdown();
     }
