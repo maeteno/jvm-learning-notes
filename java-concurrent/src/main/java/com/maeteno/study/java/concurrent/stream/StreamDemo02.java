@@ -16,21 +16,21 @@ public class StreamDemo02 {
         log.info("getPoolSize: {}", forkJoinPool.getPoolSize());
         Stream<Integer> stream = StreamSupport.stream(iterable.spliterator(), true);
 
-        ForkJoinTask<?> joinTask = forkJoinPool.submit(() -> {
-            stream.parallel()
-                    .map(it -> {
-                        log.info("forkJoinPool map: {} <== {}", it, Thread.currentThread().getName());
+        ForkJoinTask<?> joinTask = forkJoinPool.submit(() -> stream.parallel()
+                .map(it -> {
+                    log.info("forkJoinPool map: {} <== {}", it, Thread.currentThread().getName());
 
-                        try {
-                            TimeUnit.SECONDS.sleep(1L);
-                        } catch (Exception e) {
-                            log.warn("Exception: {}", e.getMessage(), e);
-                        }
+                    try {
+                        TimeUnit.SECONDS.sleep(1L);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        log.error("{}", e.getMessage(), e);
+                    }
 
-                        return it.toString();
-                    })
-                    .forEach(it -> log.info("for each: {} <== {}", it, Thread.currentThread().getName()));
-        });
+
+                    return it.toString();
+                })
+                .forEach(it -> log.info("for each: {} <== {}", it, Thread.currentThread().getName())));
 
         joinTask.join();
         log.info("getPoolSize: {}", forkJoinPool.getPoolSize());
