@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -21,20 +22,20 @@ public class StreamDemo03 {
                     .parallel()
                     .map(it -> {
                         log.info("forkJoinPool map: {} <== {}", it, Thread.currentThread().getName());
-                        if (it % 3 == 0) {
-                            try {
-                                Thread.sleep(10000L);
-                            } catch (Exception e) {
-                                log.warn("Exception: {}", e.getMessage(), e);
-                            }
+
+                        try {
+                            TimeUnit.SECONDS.sleep(1L);
+                        } catch (Exception e) {
+                            log.warn("Exception: {}", e.getMessage(), e);
                         }
+
                         return it.toString();
                     })
                     .forEach(it -> log.info("for each: {} <== {}", it, Thread.currentThread().getName()));
         });
 
         joinTask.join();
-        log.info("getPoolSize: {}",forkJoinPool.getPoolSize());
+        log.info("getPoolSize: {}", forkJoinPool.getPoolSize());
     }
 
 }
