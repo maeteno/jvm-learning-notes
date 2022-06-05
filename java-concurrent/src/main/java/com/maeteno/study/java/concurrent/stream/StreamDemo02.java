@@ -27,7 +27,6 @@ public class StreamDemo02 {
                         log.error("{}", e.getMessage(), e);
                     }
 
-
                     return it.toString();
                 })
                 .forEach(it -> log.info("for each: {} <== {}", it, Thread.currentThread().getName())));

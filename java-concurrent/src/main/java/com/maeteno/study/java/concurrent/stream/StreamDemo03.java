@@ -13,26 +13,26 @@ import java.util.stream.StreamSupport;
 public class StreamDemo03 {
     public static void main(String[] args) {
         Iterable<Integer> iterable = new MyIterable();
-        ForkJoinPool forkJoinPool = new ForkJoinPool(10);
+        ForkJoinPool forkJoinPool = new ForkJoinPool(15);
 
-        List<Integer> collect = StreamSupport.stream(iterable.spliterator(), true).collect(Collectors.toList());
+        List<Integer> collect = StreamSupport.stream(iterable.spliterator(), true)
+                .collect(Collectors.toList());
 
-        ForkJoinTask<?> joinTask = forkJoinPool.submit(() -> {
-            collect.stream()
-                    .parallel()
-                    .map(it -> {
-                        log.info("forkJoinPool map: {} <== {}", it, Thread.currentThread().getName());
+        ForkJoinTask<?> joinTask = forkJoinPool.submit(() -> collect.stream()
+                .parallel()
+                .map(it -> {
+                    log.info("forkJoinPool A map: {} <== {}", it, Thread.currentThread().getName());
 
-                        try {
-                            TimeUnit.SECONDS.sleep(1L);
-                        } catch (Exception e) {
-                            log.warn("Exception: {}", e.getMessage(), e);
-                        }
+                    try {
+                        TimeUnit.SECONDS.sleep(1L);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        log.error("InterruptedException: {}", e.getMessage(), e);
+                    }
 
-                        return it.toString();
-                    })
-                    .forEach(it -> log.info("for each: {} <== {}", it, Thread.currentThread().getName()));
-        });
+                    return it.toString();
+                })
+                .forEach(it -> log.info("for each: {} <== {}", it, Thread.currentThread().getName())));
 
         joinTask.join();
         log.info("getPoolSize: {}", forkJoinPool.getPoolSize());

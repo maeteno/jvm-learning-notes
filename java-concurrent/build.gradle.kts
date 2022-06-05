@@ -22,8 +22,12 @@ dependencies {
     // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava
     implementation("io.reactivex.rxjava3:rxjava:3.1.4")
 
+    // https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation("com.google.guava:guava:31.1-jre")
+
     // lombok
-    compileOnly("org.projectlombok:lombok:1.18.20")
+    implementation("org.projectlombok:lombok:1.18.20")
+    
     annotationProcessor("org.projectlombok:lombok:1.18.20")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")

@@ -18,7 +18,7 @@ class MyIterable implements Iterable<Integer> {
 
     @Slf4j
     static class MyIterator implements Iterator<Integer> {
-        private final Integer total = 30;
+        private final Integer total = 100;
         private Integer index = 0;
 
         @Override
