@@ -1,4 +1,4 @@
-package com.maeteno.study.java.concurrent.rx;
+package com.maeteno.study.java.concurrent.redisson;
 
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.Redisson;

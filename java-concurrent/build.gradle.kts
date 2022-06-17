@@ -20,7 +20,11 @@ dependencies {
     implementation("org.redisson:redisson:3.17.0")
 
     // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava
-    implementation("io.reactivex.rxjava3:rxjava:3.1.4")
+    implementation("io.reactivex.rxjava3:rxjava:3.1.5")
+
+    // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxjava
+    implementation("io.reactivex.rxjava2:rxjava:2.2.20")
+
 
     // https://mvnrepository.com/artifact/com.google.guava/guava
     implementation("com.google.guava:guava:31.1-jre")
