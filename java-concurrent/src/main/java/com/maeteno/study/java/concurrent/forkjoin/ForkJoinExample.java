@@ -1,4 +1,4 @@
-package com.maeteno.study.java.concurrent;
+package com.maeteno.study.java.concurrent.forkjoin;
 
 import lombok.extern.slf4j.Slf4j;
 
