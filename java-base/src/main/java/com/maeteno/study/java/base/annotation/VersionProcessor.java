@@ -15,6 +15,6 @@ public class VersionProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         System.out.println("VersionProcessor:process");
-        return false;
+        return true;
     }
 }
